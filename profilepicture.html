@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile Picture Updater</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+#profilePictureContainer {
+  margin-top: 20px;
+}
+
+#profilePicture {
+  max-width: 200px;
+  max-height: 200px;
+ border-radius: 70%;
+  border: 5px solid gold; 
+  }
+  #profilePicture :hover{
+    background-color: rgba(8, 97, 223, 0.8);
+      /* z-index: 10000; */
+      color: darkviolet;
+      transition: background-color .2s ease-in-out;
+      border-radius: 70%;
+      border-color: pink;
+      border-width: 200px;
+    
+      margin-bottom: 0px;
+    }
+    
+
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center; color: red;">Profile Picture Updater</h1>
+  <input type="file" id="profileImage" accept="image/*">
+  <button onclick="updateProfilePicture()">Update Profile Picture</button>
+  <div id="profilePictureContainer">
+    <img id="profilePicture" src="../house2 (1).jpg" alt="Profile Picture">
+  </div>
+  <h3>Supraja</h3>
+
+  <script src="script.js"></script>
+</body>
+</html>

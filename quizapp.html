@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+  font-family: 'Poppins', sans-serif;
+  background: #b9b3a9;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 450px;
+  padding: 20px;
+  margin-top: 80px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.question {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.options {
+  margin-bottom: 20px;
+}
+
+.option {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #428bca;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: #3071a9;
+}
+
+.result {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.hide{
+  display: none;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+    <h1>Quiz App</h1>
+    <div id="quiz"></div>
+    <div id="result" class="result"></div>
+    <button id="submit" class="button">Submit</button>
+    <button id="retry" class="button hide">Retry</button>
+    <button id="showAnswer" class="button hide">Show Answer</button>
+  </div>
+  <script>
+    const quizData = [
+  {
+    question: 'What is the full form of HTML?',
+    options: ['Hyper-text-markup-language', 'Hyper-link-markup-language', 'Hyper-text-mark-language', 'None Of the above'],
+    answer: 'Hyper-text-markup-language',
+  },
+  {
+    question: 'Which are the following are non-semnatic tags?',
+    options: ['div', 'Span', 'article', 'both a and b'],
+    answer: 'both a and b',
+  },
+  {
+    question: 'What is the correct HTML element for inserting a line break?',
+    options: ['<hr>', '<br>', '<b>', '<break>'],
+    answer: '<br>',
+  },
+  {
+    question: 'Choose the correct HTML element to define emphasized text?',
+    options: ['<italic>', '<em>', '<i>', '<tm>'],
+    answer: '<em>',
+  },
+  {
+    question: 'Which character is used to indicate an end tag?',
+    options: [
+      '$',
+      '*',
+      '/',
+      '@',
+    ],
+    answer: '/',
+  },
+  {
+    question: 'How can you make a numbered list?',
+    options: ['<dl>', '<ol>', '<ul>', 'none'],
+    answer: '<ol>',
+  },
+  {
+    question: 'How can you make a bulleted list?',
+    options: [
+      '<ol>',
+      '<dl>',
+      '<list>',
+      '<ul>',
+    ],
+    answer: '<ul>',
+  },
+  {
+    question: 'Which is the largest heading tag?',
+    options: ['<h4>', ',h2>', '<h1>', '<h3>'],
+    answer: '<h1>',
+  },
+  {
+    question: 'How many types of lists are there in html?',
+    options: [
+      '3',
+      '2',
+      '4',
+      '1',
+    ],
+    answer: '3',
+  },
+  {
+    question: 'How many ways are there to style the css?',
+    options: ['3', '1', '2', '4'],
+    answer: '3',
+  },
+  {
+    question: 'How many types of selectors in css',
+    options: ['3', '1', '2', '4'],
+    answer: '4',
+  },
+  {
+    question: 'How many types of data types are there in j.s?',
+    options: ['3', '1', '2', '4'],
+    answer: '2',
+  },
+  {
+    question: 'How many types of methods are there in dom ',
+    options: ['3', '4', '5', '1'],
+    answer: '5',
+  },
+  {
+    question: 'Which method is used to insert the elements in the last of an array?',
+    options: ['shift', 'unshift', 'split', 'push'],
+    answer: 'push',
+  },
+  {
+    question: 'Which html attribute is used to given the text to the image?',
+    options: ['info', 'alt', 'description', 'none of the above'],
+    answer: 'alt',
+  },
+  {
+    question: 'Which version is using in html?',
+    options: ['3', '1', '2', '5'],
+    answer: '5',
+  },
+  {
+    question: 'How many functions are there in j.s?',
+    options: ['3', '5', '2', '4'],
+    answer: '5',
+  },
+  {
+    question: 'How many states are there in promises?',
+    options: ['3', '5', '2', '4'],
+    answer: '3',
+  },
+  {
+    question: 'What does CSS stands for?',
+    options: ['cascading-style-sheets', 'cascading-styling-Sheets', 'colurful-style-sheets', 'computer-style-sheets'],
+    answer: 'cascading-style-sheets',
+  },
+  {
+    question: 'Which property is used to change the background color?',
+    options: ['color', 'bg-color', 'background-color', 'bg'],
+    answer: 'background-color',
+  },
+  {
+    question: 'What symbol is used to denote the id selector?',
+    options: ['@', '#', '.', '$'],
+    answer: '#',
+  },
+  {
+    question: 'How many types of positions are there in css?',
+    options: ['3', '5', '2', '4'],
+    answer: '5',
+  },
+  {
+    question: 'How many types of variables are there in j.s?',
+    options: ['3', '5', '2', '4'],
+    answer: '3',
+  },
+  {
+    question: 'How many types of methods are there in j.s to access the object elements?',
+    options: ['3', '5', '2', '4'],
+    answer: '2',
+  },
+  {
+    question: 'How many types of loops are there in j.s?',
+    options: ['3', '5', '2', '4'],
+    answer: '3',
+  },
+  {
+    question:'Which symbol is used to denote the universal selector?',
+    options: ['&', '.', '/', '*'],
+    answer: '*',
+  },
+];
+
+const quizContainer = document.getElementById('quiz');
+const resultContainer = document.getElementById('result');
+const submitButton = document.getElementById('submit');
+const retryButton = document.getElementById('retry');
+const showAnswerButton = document.getElementById('showAnswer');
+
+let currentQuestion = 0;
+let score = 0;
+let incorrectAnswers = [];
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+function displayQuestion() {
+  const questionData = quizData[currentQuestion];
+
+  const questionElement = document.createElement('div');
+  questionElement.className = 'question';
+  questionElement.innerHTML = questionData.question;
+
+  const optionsElement = document.createElement('div');
+  optionsElement.className = 'options';
+
+  const shuffledOptions = [...questionData.options];
+  shuffleArray(shuffledOptions);
+
+  for (let i = 0; i < shuffledOptions.length; i++) {
+    const option = document.createElement('label');
+    option.className = 'option';
+
+    const radio = document.createElement('input');
+    radio.type = 'radio';
+    radio.name = 'quiz';
+    radio.value = shuffledOptions[i];
+
+    const optionText = document.createTextNode(shuffledOptions[i]);
+
+    option.appendChild(radio);
+    option.appendChild(optionText);
+    optionsElement.appendChild(option);
+  }
+
+  quizContainer.innerHTML = '';
+  quizContainer.appendChild(questionElement);
+  quizContainer.appendChild(optionsElement);
+}
+
+function checkAnswer() {
+  const selectedOption = document.querySelector('input[name="quiz"]:checked');
+  if (selectedOption) {
+    const answer = selectedOption.value;
+    if (answer === quizData[currentQuestion].answer) {
+      score++;
+    } else {
+      incorrectAnswers.push({
+        question: quizData[currentQuestion].question,
+        incorrectAnswer: answer,
+        correctAnswer: quizData[currentQuestion].answer,
+      });
+    }
+    currentQuestion++;
+    selectedOption.checked = false;
+    if (currentQuestion < quizData.length) {
+      displayQuestion();
+    } else {
+      displayResult();
+    }
+  }
+}
+
+function displayResult() {
+  quizContainer.style.display = 'none';
+  submitButton.style.display = 'none';
+  retryButton.style.display = 'inline-block';
+  showAnswerButton.style.display = 'inline-block';
+  resultContainer.innerHTML = `You scored ${score} out of ${quizData.length}!`;
+}
+
+function retryQuiz() {
+  currentQuestion = 0;
+  score = 0;
+  incorrectAnswers = [];
+  quizContainer.style.display = 'block';
+  submitButton.style.display = 'inline-block';
+  retryButton.style.display = 'none';
+  showAnswerButton.style.display = 'none';
+  resultContainer.innerHTML = '';
+  displayQuestion();
+}
+
+function showAnswer() {
+  quizContainer.style.display = 'none';
+  submitButton.style.display = 'none';
+  retryButton.style.display = 'inline-block';
+  showAnswerButton.style.display = 'none';
+
+  let incorrectAnswersHtml = '';
+  for (let i = 0; i < incorrectAnswers.length; i++) {
+    incorrectAnswersHtml += `
+      <p>
+        <strong>Question:</strong> ${incorrectAnswers[i].question}<br>
+        <strong>Your Answer:</strong> ${incorrectAnswers[i].incorrectAnswer}<br>
+        <strong>Correct Answer:</strong> ${incorrectAnswers[i].correctAnswer}
+      </p>
+    `;
+  }
+
+  resultContainer.innerHTML = `
+    <p>You scored ${score} out of ${quizData.length}!</p>
+    <p>Incorrect Answers:</p>
+    ${incorrectAnswersHtml}
+  `;
+}
+
+submitButton.addEventListener('click', checkAnswer);
+retryButton.addEventListener('click', retryQuiz);
+showAnswerButton.addEventListener('click', showAnswer);
+
+displayQuestion();
+
+  </script>
+</body>
+</html>
+
+
